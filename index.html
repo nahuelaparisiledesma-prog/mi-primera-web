@@ -1,33 +1,38 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Descubre el Bar Soriano, un clásico de los pinchos de champiñón en Logroño.">
-  <title>Bar Soriano | El sabor de Logroño</title>
+
+  <title>Restaurante | Sabores de La Rioja</title>
+  <meta name="description"
+        content="Descubre nuestra propuesta gastronómica en Logroño. Consulta la carta y encuentra cómo visitarnos.">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --verde: #193b30;
+      --verde-claro: #315747;
+      --crema: #f7f3e9;
+      --dorado: #c6a66b;
+      --texto: #252923;
     }
 
-    :root {
-      --fondo: #171914;
-      --verde: #a6bd83;
-      --crema: #f5f0e6;
-      --texto: #d4d2c8;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 85px;
     }
 
     body {
-      background: var(--fondo);
-      color: var(--crema);
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--crema);
+      color: var(--texto);
       line-height: 1.6;
     }
 
@@ -36,129 +41,145 @@
       text-decoration: none;
     }
 
+    .contenedor {
+      width: min(1120px, 90%);
+      margin: 0 auto;
+    }
+
     header {
+      background: var(--verde);
+      color: var(--crema);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav {
+      min-height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 22px 8%;
-      border-bottom: 1px solid #383b31;
+      gap: 24px;
     }
 
     .logo {
       font-family: Georgia, serif;
-      font-size: 25px;
+      font-size: 1.4rem;
       font-weight: bold;
       letter-spacing: 1px;
     }
 
-    .logo span {
-      color: var(--verde);
-    }
-
-    nav {
-      display: flex;
-      gap: 25px;
-      font-size: 14px;
-    }
-
-    nav a:hover {
-      color: var(--verde);
-    }
-
-    .hero {
-      min-height: 590px;
+    .enlaces {
       display: flex;
       align-items: center;
-      padding: 80px 8%;
-      background:
-        linear-gradient(90deg, #171914 10%, #171914d9 48%, #17191430),
-        url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1800&q=85")
-        center/cover;
+      gap: 26px;
+      font-size: 0.92rem;
     }
 
-    .hero-content {
-      max-width: 620px;
-    }
-
-    .etiqueta {
-      color: var(--verde);
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    h1 {
-      font-family: Georgia, serif;
-      font-size: clamp(46px, 7vw, 78px);
-      line-height: 1.05;
-      margin: 20px 0;
-    }
-
-    h1 span {
-      color: var(--verde);
-      font-style: italic;
-    }
-
-    .hero p {
-      color: var(--texto);
-      max-width: 470px;
-      margin-bottom: 30px;
-      font-size: 17px;
+    .enlaces a:hover {
+      color: var(--dorado);
     }
 
     .boton {
       display: inline-block;
-      padding: 14px 23px;
-      background: var(--verde);
-      color: #171914;
+      background: var(--dorado);
+      color: #192b21;
+      padding: 13px 22px;
       border-radius: 3px;
       font-weight: bold;
-      transition: 0.25s;
+      transition: transform 0.2s, background 0.2s;
     }
 
     .boton:hover {
-      background: var(--crema);
+      background: #d7bd8d;
       transform: translateY(-2px);
     }
 
+    .portada {
+      min-height: 570px;
+      display: flex;
+      align-items: center;
+      color: white;
+      background:
+        linear-gradient(90deg,
+          rgba(12, 30, 23, 0.88),
+          rgba(12, 30, 23, 0.25)),
+        url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=85")
+        center 55% / cover;
+    }
+
+    .portada-contenido {
+      max-width: 650px;
+      padding: 80px 0;
+    }
+
+    .etiqueta {
+      color: var(--dorado);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 0.78rem;
+      font-weight: bold;
+    }
+
+    h1, h2, h3 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: normal;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: clamp(2.7rem, 6vw, 5rem);
+      margin: 20px 0;
+    }
+
+    .portada p {
+      max-width: 500px;
+      margin-bottom: 30px;
+      font-size: 1.08rem;
+    }
+
     section {
-      padding: 85px 8%;
+      padding: 85px 0;
     }
 
-    .titulo {
-      font-family: Georgia, serif;
-      font-size: clamp(32px, 4vw, 46px);
-      margin: 10px 0 15px;
+    .encabezado-seccion {
+      max-width: 650px;
+      margin: 0 auto 42px;
+      text-align: center;
     }
 
-    .subtitulo {
-      color: var(--texto);
-      max-width: 620px;
-      margin-bottom: 38px;
+    .encabezado-seccion h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      margin: 12px 0;
+      color: var(--verde);
     }
 
-    .especialidad {
+    .presentacion {
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
       gap: 55px;
     }
 
-    .especialidad img {
+    .presentacion img {
       width: 100%;
-      height: 400px;
+      height: 390px;
       object-fit: cover;
       border-radius: 4px;
     }
 
-    .especialidad p {
-      color: var(--texto);
-      margin: 20px 0;
+    .presentacion h2 {
+      font-size: 2.7rem;
+      color: var(--verde);
+      margin: 12px 0 20px;
+    }
+
+    .presentacion p {
+      margin-bottom: 18px;
     }
 
     .carta {
-      background: #20231c;
+      background: #eeeadf;
     }
 
     .platos {
@@ -168,136 +189,121 @@
     }
 
     .plato {
-      background: var(--fondo);
-      border: 1px solid #383b31;
+      background: var(--crema);
+      border: 1px solid #e2dccf;
       overflow: hidden;
-      border-radius: 4px;
-      transition: transform 0.25s;
-    }
-
-    .plato:hover {
-      transform: translateY(-5px);
     }
 
     .plato img {
+      display: block;
       width: 100%;
       height: 220px;
       object-fit: cover;
-      display: block;
     }
 
-    .plato-info {
+    .plato-contenido {
       padding: 23px;
     }
 
     .plato h3 {
-      font-family: Georgia, serif;
-      font-size: 23px;
-      margin-bottom: 8px;
+      font-size: 1.4rem;
+      color: var(--verde);
+      margin-bottom: 10px;
     }
 
-    .plato p {
-      color: var(--texto);
-      font-size: 14px;
+    .pendiente {
+      display: inline-block;
+      color: #6e5730;
+      background: #eee1c6;
+      padding: 4px 9px;
+      border-radius: 3px;
+      font-size: 0.8rem;
+      margin-top: 14px;
     }
 
-    .aviso {
-      font-size: 12px;
-      color: #aaa99f;
-      margin-top: 25px;
+    .ubicacion {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: start;
     }
 
-    .visitanos {
-      text-align: center;
-    }
-
-    .datos {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 45px;
-      margin: 35px 0;
+    .ubicacion h2,
+    .contacto h2 {
+      color: var(--verde);
+      font-size: 2.5rem;
+      margin: 12px 0 20px;
     }
 
     .dato {
-      max-width: 280px;
+      padding: 17px 0;
+      border-bottom: 1px solid #ddd6c7;
     }
 
-    .dato h3 {
+    .dato strong {
+      display: block;
       color: var(--verde);
-      margin-bottom: 8px;
+      margin-bottom: 5px;
     }
 
-    .dato p {
-      color: var(--texto);
+    .aviso {
+      font-size: 0.9rem;
+      color: #625e53;
+      margin-top: 18px;
+    }
+
+    .contacto {
+      background: var(--verde);
+      color: var(--crema);
+      text-align: center;
+    }
+
+    .contacto h2 {
+      color: var(--crema);
+    }
+
+    .contacto p {
+      max-width: 560px;
+      margin: 0 auto 25px;
     }
 
     footer {
-      border-top: 1px solid #383b31;
-      padding: 28px 8%;
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      flex-wrap: wrap;
-      color: var(--texto);
-      font-size: 13px;
-    }
-
-    /* Apartado NFC */
-    .nfc {
-      background: #a6bd83;
-      color: #171914;
+      background: #11281f;
+      color: #e8e1d3;
       text-align: center;
-      padding: 55px 8%;
+      padding: 25px 0;
+      font-size: 0.85rem;
     }
 
-    .nfc h2 {
-      font-family: Georgia, serif;
-      font-size: 32px;
-      margin-bottom: 12px;
-    }
-
-    .nfc p {
-      margin-bottom: 20px;
-    }
-
-    .nfc .boton {
-      background: #171914;
-      color: #f5f0e6;
-    }
-
-    .nfc .boton:hover {
-      background: #383b31;
-    }
-
-    @media (max-width: 750px) {
-      header {
+    @media (max-width: 760px) {
+      nav {
+        padding: 17px 0;
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
       }
 
-      nav {
-        gap: 16px;
+      .enlaces {
         flex-wrap: wrap;
         justify-content: center;
+        gap: 14px;
       }
 
-      .hero {
-        min-height: 520px;
-        padding: 60px 7%;
+      .portada {
+        min-height: 500px;
       }
 
       section {
-        padding: 60px 7%;
+        padding: 60px 0;
       }
 
-      .especialidad {
+      .presentacion,
+      .ubicacion {
         grid-template-columns: 1fr;
-        gap: 25px;
+        gap: 30px;
       }
 
-      .especialidad img {
-        height: 300px;
+      .presentacion img {
+        height: 280px;
       }
 
       .platos {
@@ -307,10 +313,15 @@
       .plato img {
         height: 250px;
       }
+    }
 
-      footer {
-        flex-direction: column;
-        text-align: center;
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        transition: none !important;
       }
     }
   </style>
@@ -319,190 +330,178 @@
 <body>
 
   <header>
-    <a href="#inicio" class="logo">BAR <span>SORIANO</span></a>
+    <nav class="contenedor" aria-label="Navegación principal">
+      <a href="#inicio" class="logo">SABORES DE LA RIOJA</a>
 
-    <nav aria-label="Navegación principal">
-      <a href="#inicio">Inicio</a>
-      <a href="#historia">Nuestra esencia</a>
-      <a href="#carta">Carta</a>
-      <a href="#visitanos">Contacto</a>
+      <div class="enlaces">
+        <a href="#inicio">Inicio</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#carta">Carta</a>
+        <a href="#ubicacion">Ubicación</a>
+        <a href="#contacto">Contacto</a>
+      </div>
     </nav>
   </header>
 
   <main>
-    <section class="hero" id="inicio">
-      <div class="hero-content">
-        <span class="etiqueta">Tradición riojana</span>
+    <section class="portada" id="inicio">
+      <div class="contenedor portada-contenido">
+        <span class="etiqueta">Gastronomía en Logroño</span>
 
-        <h1>El sabor de<br><span>lo auténtico.</span></h1>
+        <h1>Sabores que merecen ser descubiertos</h1>
 
         <p>
-          Un clásico de Logroño donde el protagonista es sencillo:
-          el champiñón a la plancha y toda una tradición de pinchos.
+          Una propuesta gastronómica por descubrir.
+          Consulta nuestra carta y encuentra tu próxima experiencia culinaria.
         </p>
 
-        <a href="#carta" class="boton">
-          Descubre nuestra especialidad ↗
-        </a>
+        <a class="boton" href="#carta">Descubrir la carta</a>
       </div>
     </section>
 
-    <section id="historia">
-      <div class="especialidad">
-        <div>
-          <span class="etiqueta">Nuestra esencia</span>
-
-          <h2 class="titulo">
-            Pequeños bocados.<br>Grandes recuerdos.
-          </h2>
-
-          <p>
-            En plena zona de la calle Laurel, el Bar Soriano es conocido
-            por su tradicional pincho de champiñón con gamba.
-            Una propuesta sencilla que forma parte de la cultura
-            gastronómica de Logroño.
-          </p>
-
-          <p>
-            Aquí celebramos el tapeo, los buenos momentos y el sabor
-            de una tradición que merece seguir compartiéndose.
-          </p>
-
-          <a
-            class="boton"
-            href="https://www.google.com/maps/search/?api=1&query=Bar+Soriano+Logrono"
-            target="_blank"
-            rel="noopener noreferrer">
-            Cómo llegar ↗
-          </a>
-        </div>
-
+    <section id="nosotros">
+      <div class="contenedor presentacion">
         <img
-          src="https://images.unsplash.com/photo-1505576633757-0ac1084af824?auto=format&fit=crop&w=1000&q=85"
-          alt="Selección de comida para compartir">
+          src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85"
+          alt="Plato gastronómico presentado con cuidado"
+          loading="lazy"
+        >
+
+        <div>
+          <span class="etiqueta">Nuestra filosofía</span>
+          <h2>La calidad está en los detalles</h2>
+
+          <p>
+            Cada restaurante tiene una historia que contar.
+            Este espacio está preparado para presentar la cocina,
+            el ambiente y la personalidad del establecimiento.
+          </p>
+
+          <p>
+            Cuando se incorporen los datos reales del negocio,
+            esta sección explicará su propuesta gastronómica.
+          </p>
+
+          <a class="boton" href="#ubicacion">Ven a conocernos</a>
+        </div>
       </div>
     </section>
 
     <section class="carta" id="carta">
-      <span class="etiqueta">Nuestra propuesta</span>
-
-      <h2 class="titulo">El placer de lo sencillo.</h2>
-
-      <p class="subtitulo">
-        Una selección visual inspirada en la cultura del pincho
-        y los sabores de nuestra tierra.
-      </p>
-
-      <div class="platos">
-        <article class="plato">
-          <img
-            src="https://images.unsplash.com/photo-1504545102780-26774c1bb073?auto=format&fit=crop&w=800&q=85"
-            alt="Setas cocinadas">
-
-          <div class="plato-info">
-            <h3>El champiñón</h3>
-            <p>
-              Nuestra especialidad: champiñones a la plancha
-              con gamba y salsa.
-            </p>
-          </div>
-        </article>
-
-        <article class="plato">
-          <img
-            src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&q=85"
-            alt="Plato de ingredientes frescos">
-
-          <div class="plato-info">
-            <h3>El sabor de la tierra</h3>
-            <p>
-              Una imagen de inspiración gastronómica para
-              celebrar los productos de nuestra región.
-            </p>
-          </div>
-        </article>
-
-        <article class="plato">
-          <img
-            src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=85"
-            alt="Comida para compartir">
-
-          <div class="plato-info">
-            <h3>Momentos para compartir</h3>
-            <p>
-              Porque salir de pinchos también es disfrutar
-              de la compañía y del ambiente de Logroño.
-            </p>
-          </div>
-        </article>
-      </div>
-
-      <p class="aviso">
-        Las fotografías son ilustrativas. Confirma los platos y precios
-        reales con el establecimiento.
-      </p>
-    </section>
-
-    <section class="visitanos" id="visitanos">
-      <span class="etiqueta">Estamos en Logroño</span>
-
-      <h2 class="titulo">Nos vemos en Laurel.</h2>
-
-      <p class="subtitulo" style="margin-left:auto;margin-right:auto">
-        Ven a descubrir uno de los clásicos del tapeo riojano.
-      </p>
-
-      <div class="datos">
-        <div class="dato">
-          <h3>📍 Dirección</h3>
-          <p>Travesía de Laurel, 2<br>26001 Logroño, La Rioja</p>
+      <div class="contenedor">
+        <div class="encabezado-seccion">
+          <span class="etiqueta">Nuestra selección</span>
+          <h2>La carta</h2>
+          <p>
+            Descubre una selección de nuestra propuesta gastronómica.
+            Los platos y precios definitivos están pendientes de confirmar.
+          </p>
         </div>
 
-        <div class="dato">
-          <h3>☎ Contacto</h3>
-          <p>941 228 807</p>
+        <div class="platos">
+          <article class="plato">
+            <img
+              src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=80"
+              alt="Presentación de comida"
+              loading="lazy"
+            >
+            <div class="plato-contenido">
+              <h3>Entrantes</h3>
+              <p>Se añadirán los entrantes reales del restaurante.</p>
+              <span class="pendiente">Carta por confirmar</span>
+            </div>
+          </article>
+
+          <article class="plato">
+            <img
+              src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=700&q=80"
+              alt="Plato principal servido en una mesa"
+              loading="lazy"
+            >
+            <div class="plato-contenido">
+              <h3>Platos principales</h3>
+              <p>Se incorporarán las especialidades de la casa.</p>
+              <span class="pendiente">Carta por confirmar</span>
+            </div>
+          </article>
+
+          <article class="plato">
+            <img
+              src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=700&q=80"
+              alt="Postre presentado en un plato"
+              loading="lazy"
+            >
+            <div class="plato-contenido">
+              <h3>Postres</h3>
+              <p>Se añadirán los postres disponibles y sus precios.</p>
+              <span class="pendiente">Carta por confirmar</span>
+            </div>
+          </article>
         </div>
       </div>
-
-      <a
-        class="boton"
-        href="https://www.google.com/maps/search/?api=1&query=Bar+Soriano+Logrono"
-        target="_blank"
-        rel="noopener noreferrer">
-        Ver ubicación en Google Maps ↗
-      </a>
-
-      <p class="aviso">
-        Datos de contacto sujetos a confirmación.
-      </p>
     </section>
 
-    <section class="nfc" id="nfc">
-      <h2>Tu próxima visita empieza aquí.</h2>
+    <section id="ubicacion">
+      <div class="contenedor ubicacion">
+        <div>
+          <span class="etiqueta">Estamos aquí</span>
+          <h2>Ven a visitarnos</h2>
+          <p>
+            Consulta la ubicación del restaurante y planifica tu visita.
+          </p>
+        </div>
 
-      <p>
-        Acerca tu móvil a nuestra tarjeta NFC para descubrir
-        la web del Bar Soriano.
-      </p>
+        <div>
+          <div class="dato">
+            <strong>Dirección</strong>
+            <p>Pendiente de confirmar con el establecimiento.</p>
+          </div>
 
-      <a
-        class="boton"
-        href="https://TUUSUARIO.github.io/bar-soriano/"
-        target="_blank"
-        rel="noopener noreferrer">
-        Abrir nuestra web ↗
-      </a>
+          <div class="dato">
+            <strong>Horario</strong>
+            <p>Pendiente de confirmar con el establecimiento.</p>
+          </div>
 
-      <p style="font-size:12px;margin-top:18px">
-        Sustituye la URL de ejemplo por la dirección real de tu web publicada.
-      </p>
+          <div class="dato">
+            <strong>Cómo llegar</strong>
+            <p>Se añadirá un enlace al mapa cuando se confirme la dirección.</p>
+          </div>
+
+          <p class="aviso">
+            Esta página es una demostración de diseño, no una web oficial.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contacto" id="contacto">
+      <div class="contenedor">
+        <span class="etiqueta">Estamos para ayudarte</span>
+        <h2>¿Te gustaría visitarnos?</h2>
+
+        <p>
+          Próximamente encontrarás aquí los datos de contacto
+          y las opciones disponibles para comunicarte con el restaurante.
+        </p>
+
+        <a class="boton" href="#ubicacion">Consultar información</a>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>BAR SORIANO · Logroño, La Rioja</p>
-    <p>Propuesta de demostración · No es la web oficial</p>
+    <div class="contenedor">
+      <p>
+        © <span id="anio"></span> Sabores de La Rioja ·
+        Demostración web
+      </p>
+    </div>
   </footer>
+
+  <script>
+    document.getElementById("anio").textContent =
+      new Date().getFullYear();
+  </script>
 
 </body>
 </html>
