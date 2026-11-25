@@ -1,507 +1,77 @@
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Restaurante | Sabores de La Rioja</title>
-  <meta name="description"
-        content="Descubre nuestra propuesta gastronómica en Logroño. Consulta la carta y encuentra cómo visitarnos.">
-
-  <style>
-    :root {
-      --verde: #193b30;
-      --verde-claro: #315747;
-      --crema: #f7f3e9;
-      --dorado: #c6a66b;
-      --texto: #252923;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 85px;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--crema);
-      color: var(--texto);
-      line-height: 1.6;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .contenedor {
-      width: min(1120px, 90%);
-      margin: 0 auto;
-    }
-
-    header {
-      background: var(--verde);
-      color: var(--crema);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    nav {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .logo {
-      font-family: Georgia, serif;
-      font-size: 1.4rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    .enlaces {
-      display: flex;
-      align-items: center;
-      gap: 26px;
-      font-size: 0.92rem;
-    }
-
-    .enlaces a:hover {
-      color: var(--dorado);
-    }
-
-    .boton {
-      display: inline-block;
-      background: var(--dorado);
-      color: #192b21;
-      padding: 13px 22px;
-      border-radius: 3px;
-      font-weight: bold;
-      transition: transform 0.2s, background 0.2s;
-    }
-
-    .boton:hover {
-      background: #d7bd8d;
-      transform: translateY(-2px);
-    }
-
-    .portada {
-      min-height: 570px;
-      display: flex;
-      align-items: center;
-      color: white;
-      background:
-        linear-gradient(90deg,
-          rgba(12, 30, 23, 0.88),
-          rgba(12, 30, 23, 0.25)),
-        url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=85")
-        center 55% / cover;
-    }
-
-    .portada-contenido {
-      max-width: 650px;
-      padding: 80px 0;
-    }
-
-    .etiqueta {
-      color: var(--dorado);
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      font-size: 0.78rem;
-      font-weight: bold;
-    }
-
-    h1, h2, h3 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-weight: normal;
-      line-height: 1.2;
-    }
-
-    h1 {
-      font-size: clamp(2.7rem, 6vw, 5rem);
-      margin: 20px 0;
-    }
-
-    .portada p {
-      max-width: 500px;
-      margin-bottom: 30px;
-      font-size: 1.08rem;
-    }
-
-    section {
-      padding: 85px 0;
-    }
-
-    .encabezado-seccion {
-      max-width: 650px;
-      margin: 0 auto 42px;
-      text-align: center;
-    }
-
-    .encabezado-seccion h2 {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      margin: 12px 0;
-      color: var(--verde);
-    }
-
-    .presentacion {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 55px;
-    }
-
-    .presentacion img {
-      width: 100%;
-      height: 390px;
-      object-fit: cover;
-      border-radius: 4px;
-    }
-
-    .presentacion h2 {
-      font-size: 2.7rem;
-      color: var(--verde);
-      margin: 12px 0 20px;
-    }
-
-    .presentacion p {
-      margin-bottom: 18px;
-    }
-
-    .carta {
-      background: #eeeadf;
-    }
-
-    .platos {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .plato {
-      background: var(--crema);
-      border: 1px solid #e2dccf;
-      overflow: hidden;
-    }
-
-    .plato img {
-      display: block;
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-    }
-
-    .plato-contenido {
-      padding: 23px;
-    }
-
-    .plato h3 {
-      font-size: 1.4rem;
-      color: var(--verde);
-      margin-bottom: 10px;
-    }
-
-    .pendiente {
-      display: inline-block;
-      color: #6e5730;
-      background: #eee1c6;
-      padding: 4px 9px;
-      border-radius: 3px;
-      font-size: 0.8rem;
-      margin-top: 14px;
-    }
-
-    .ubicacion {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 50px;
-      align-items: start;
-    }
-
-    .ubicacion h2,
-    .contacto h2 {
-      color: var(--verde);
-      font-size: 2.5rem;
-      margin: 12px 0 20px;
-    }
-
-    .dato {
-      padding: 17px 0;
-      border-bottom: 1px solid #ddd6c7;
-    }
-
-    .dato strong {
-      display: block;
-      color: var(--verde);
-      margin-bottom: 5px;
-    }
-
-    .aviso {
-      font-size: 0.9rem;
-      color: #625e53;
-      margin-top: 18px;
-    }
-
-    .contacto {
-      background: var(--verde);
-      color: var(--crema);
-      text-align: center;
-    }
-
-    .contacto h2 {
-      color: var(--crema);
-    }
-
-    .contacto p {
-      max-width: 560px;
-      margin: 0 auto 25px;
-    }
-
-    footer {
-      background: #11281f;
-      color: #e8e1d3;
-      text-align: center;
-      padding: 25px 0;
-      font-size: 0.85rem;
-    }
-
-    @media (max-width: 760px) {
-      nav {
-        padding: 17px 0;
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      .enlaces {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 14px;
-      }
-
-      .portada {
-        min-height: 500px;
-      }
-
-      section {
-        padding: 60px 0;
-      }
-
-      .presentacion,
-      .ubicacion {
-        grid-template-columns: 1fr;
-        gap: 30px;
-      }
-
-      .presentacion img {
-        height: 280px;
-      }
-
-      .platos {
-        grid-template-columns: 1fr;
-      }
-
-      .plato img {
-        height: 250px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *, *::before, *::after {
-        transition: none !important;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <header>
-    <nav class="contenedor" aria-label="Navegación principal">
-      <a href="#inicio" class="logo">SABORES DE LA RIOJA</a>
-
-      <div class="enlaces">
-        <a href="#inicio">Inicio</a>
-        <a href="#nosotros">Nosotros</a>
-        <a href="#carta">Carta</a>
-        <a href="#ubicacion">Ubicación</a>
-        <a href="#contacto">Contacto</a>
-      </div>
-    </nav>
-  </header>
-
-  <main>
-    <section class="portada" id="inicio">
-      <div class="contenedor portada-contenido">
-        <span class="etiqueta">Gastronomía en Logroño</span>
-
-        <h1>Sabores que merecen ser descubiertos</h1>
-
-        <p>
-          Una propuesta gastronómica por descubrir.
-          Consulta nuestra carta y encuentra tu próxima experiencia culinaria.
-        </p>
-
-        <a class="boton" href="#carta">Descubrir la carta</a>
-      </div>
-    </section>
-
-    <section id="nosotros">
-      <div class="contenedor presentacion">
-        <img
-          src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85"
-          alt="Plato gastronómico presentado con cuidado"
-          loading="lazy"
-        >
-
-        <div>
-          <span class="etiqueta">Nuestra filosofía</span>
-          <h2>La calidad está en los detalles</h2>
-
-          <p>
-            Cada restaurante tiene una historia que contar.
-            Este espacio está preparado para presentar la cocina,
-            el ambiente y la personalidad del establecimiento.
-          </p>
-
-          <p>
-            Cuando se incorporen los datos reales del negocio,
-            esta sección explicará su propuesta gastronómica.
-          </p>
-
-          <a class="boton" href="#ubicacion">Ven a conocernos</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="carta" id="carta">
-      <div class="contenedor">
-        <div class="encabezado-seccion">
-          <span class="etiqueta">Nuestra selección</span>
-          <h2>La carta</h2>
-          <p>
-            Descubre una selección de nuestra propuesta gastronómica.
-            Los platos y precios definitivos están pendientes de confirmar.
-          </p>
-        </div>
-
-        <div class="platos">
-          <article class="plato">
-            <img
-              src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=80"
-              alt="Presentación de comida"
-              loading="lazy"
-            >
-            <div class="plato-contenido">
-              <h3>Entrantes</h3>
-              <p>Se añadirán los entrantes reales del restaurante.</p>
-              <span class="pendiente">Carta por confirmar</span>
-            </div>
-          </article>
-
-          <article class="plato">
-            <img
-              src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=700&q=80"
-              alt="Plato principal servido en una mesa"
-              loading="lazy"
-            >
-            <div class="plato-contenido">
-              <h3>Platos principales</h3>
-              <p>Se incorporarán las especialidades de la casa.</p>
-              <span class="pendiente">Carta por confirmar</span>
-            </div>
-          </article>
-
-          <article class="plato">
-            <img
-              src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=700&q=80"
-              alt="Postre presentado en un plato"
-              loading="lazy"
-            >
-            <div class="plato-contenido">
-              <h3>Postres</h3>
-              <p>Se añadirán los postres disponibles y sus precios.</p>
-              <span class="pendiente">Carta por confirmar</span>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="ubicacion">
-      <div class="contenedor ubicacion">
-        <div>
-          <span class="etiqueta">Estamos aquí</span>
-          <h2>Ven a visitarnos</h2>
-          <p>
-            Consulta la ubicación del restaurante y planifica tu visita.
-          </p>
-        </div>
-
-        <div>
-          <div class="dato">
-            <strong>Dirección</strong>
-            <p>Pendiente de confirmar con el establecimiento.</p>
-          </div>
-
-          <div class="dato">
-            <strong>Horario</strong>
-            <p>Pendiente de confirmar con el establecimiento.</p>
-          </div>
-
-          <div class="dato">
-            <strong>Cómo llegar</strong>
-            <p>Se añadirá un enlace al mapa cuando se confirme la dirección.</p>
-          </div>
-
-          <p class="aviso">
-            Esta página es una demostración de diseño, no una web oficial.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="contacto" id="contacto">
-      <div class="contenedor">
-        <span class="etiqueta">Estamos para ayudarte</span>
-        <h2>¿Te gustaría visitarnos?</h2>
-
-        <p>
-          Próximamente encontrarás aquí los datos de contacto
-          y las opciones disponibles para comunicarte con el restaurante.
-        </p>
-
-        <a class="boton" href="#ubicacion">Consultar información</a>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="contenedor">
-      <p>
-        © <span id="anio"></span> Sabores de La Rioja ·
-        Demostración web
-      </p>
-    </div>
-  </footer>
-
-  <script>
-    document.getElementById("anio").textContent =
-      new Date().getFullYear();
-  </script>
-
-</body>
-</html>
+from reportlab.lib.pagesizes import A4
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, ListFlowable, ListItem
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.units import cm
+from pathlib import Path
+import html
+
+out = Path("/mnt/data")
+pdf_path = out / "comparativa_plataformas_plantillas_web.pdf"
+html_path = out / "comparativa_plataformas_plantillas_web.html"
+
+title = "Dónde vender plantillas web HTML y CSS"
+intro = ("Comparativa práctica para alguien de 16 años que está aprendiendo desarrollo web. "
+         "Las reglas de edad, pagos y admisión pueden cambiar; comprueba siempre las condiciones oficiales antes de abrir una cuenta.")
+
+rows = [
+    ["Plataforma", "Qué puedes vender", "Condiciones relevantes para menores"],
+    ["Gumroad", "Descargas digitales: ZIP con HTML, CSS, imágenes y documentación.", 
+     "Permite vender desde los 13 años, pero el proveedor de pagos no verifica por sí solo a menores de 18. Necesitarás que un padre, madre o tutor gestione legalmente la cuenta de cobro según las reglas aplicables."],
+    ["Framer Marketplace", "Plantillas creadas para Framer; no es un mercado genérico para vender cualquier carpeta HTML/CSS.", 
+     "El programa paga el 100% de las ventas de plantillas según su ayuda oficial. Antes de participar, un menor debe confirmar los requisitos contractuales, de cuenta y de cobro con Framer y su tutor."],
+    ["Webflow Marketplace", "Plantillas creadas para Webflow.", 
+     "Debes recibir aprobación como creador de plantillas. No es simplemente subir archivos HTML/CSS. Revisa los términos de edad y cobro con un adulto responsable."],
+    ["Creative Market", "Activos digitales y algunas plantillas/temas web.", 
+     "Sus términos exigen capacidad para aceptar un contrato vinculante; tener más de 13 años no significa automáticamente que puedas gestionar una tienda y los pagos sin un adulto. Confirma la elegibilidad directamente."],
+    ["ThemeForest / Envato", "Plantillas HTML y temas para CMS.", 
+     "Envato indica que los autores deben tener 18 años o más. Además, las nuevas altas de autores están pausadas y funcionan por invitación selectiva; no es una opción práctica para empezar ahora."]
+]
+
+recommendation = ("Recomendación: empieza creando una plantilla original para un tipo de negocio concreto (por ejemplo, un restaurante), "
+                  "con versión móvil, instrucciones y una demo. A los 16 años, la vía más segura es trabajar con un padre, madre o tutor "
+                  "que acepte expresamente las condiciones y gestione la parte contractual y de cobro cuando la plataforma lo permita. "
+                  "No falsees tu edad ni uses la identidad o los datos de pago de otra persona sin su autorización.")
+
+checklist = [
+    "Entrega un archivo ZIP ordenado: index.html, style.css, carpeta images y README con instrucciones.",
+    "Incluye una demo visible y capturas reales de la plantilla.",
+    "Usa solo fotos, iconos y fuentes con licencia adecuada; no copies webs de otras empresas.",
+    "Aclara qué incluye la compra, qué no incluye y si ofreces soporte.",
+    "Comprueba comisiones, método de pago, requisitos fiscales y edad mínima antes de publicar."
+]
+
+sources = [
+    ("Gumroad — Terms of Service", "https://gumroad.com/terms"),
+    ("Gumroad — Payout settings / sellers under 18", "https://gumroad.com/help/article/260-your-payout-settings-page"),
+    ("Framer — Creator Program", "https://www.framer.com/help/articles/how-the-creator-program-works/"),
+    ("Webflow — Contribute to the Marketplace", "https://help.webflow.com/hc/en-us/articles/33961403328403-Contribute-to-the-Webflow-Marketplace"),
+    ("Creative Market — Seller Terms", "https://creativemarket.com/terms/seller"),
+    ("Envato — Author applications are paused", "https://help.author.envato.com/hc/en-us/articles/53981083605913-Author-applications-are-paused"),
+    ("Envato — Author FAQs (age requirement)", "https://help.author.envato.com/hc/en-us/articles/360041052771-Becoming-an-Envato-Author-FAQs")
+]
+
+# PDF
+styles = getSampleStyleSheet()
+styles.add(ParagraphStyle(name="TitleCustom", parent=styles["Title"], fontName="Helvetica-Bold", fontSize=20, leading=24, alignment=TA_CENTER, textColor=colors.HexColor("#174734"), spaceAfter=12))
+styles.add(ParagraphStyle(name="Sub", parent=styles["BodyText"], fontSize=9, leading=12, textColor=colors.HexColor("#444444"), spaceAfter=10))
+styles.add(ParagraphStyle(name="Cell", parent=styles["BodyText"], fontSize=7.6, leading=9.5))
+styles.add(ParagraphStyle(name="CellHead", parent=styles["BodyText"], fontSize=8, leading=9.5, textColor=colors.white, fontName="Helvetica-Bold"))
+styles.add(ParagraphStyle(name="H2Custom", parent=styles["Heading2"], fontSize=12, leading=15, textColor=colors.HexColor("#174734"), spaceBefore=10, spaceAfter=5))
+styles.add(ParagraphStyle(name="Small", parent=styles["BodyText"], fontSize=7.5, leading=9, textColor=colors.HexColor("#444444")))
+
+doc = SimpleDocTemplate(str(pdf_path), pagesize=A4, rightMargin=1.5*cm, leftMargin=1.5*cm, topMargin=1.4*cm, bottomMargin=1.4*cm)
+story = [Paragraph(title, styles["TitleCustom"]), Paragraph(intro, styles["Sub"]), Spacer(1, 4)]
+table_data = []
+for r_idx, row in enumerate(rows):
+    if r_idx == 0:
+        table_data.append([Paragraph(html.escape(cell), styles["CellHead"]) for cell in row])
+    else:
+        table_data.append([Paragraph(html.escape(cell), styles["Cell"]) for cell in row])
+tbl = Table(table_data, colWidths=[3.0*cm, 4.0*cm, 9.0*cm], repeatRows=1, hAlign="LEFT")
+tbl.setStyle(TableStyle([
+    ("BACKGROUND", (0,0), (-1,0), colors.HexColor("#174734")),
+    ("TEXTCOLOR", (0,0), (-1,0), colors.white),
+    ("GRID", (0,0), (-1,-1), 0.4, colors.HexColor("#D4DDD7")),
