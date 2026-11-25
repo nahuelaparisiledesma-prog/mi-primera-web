@@ -1,77 +1,200 @@
 
-from reportlab.lib.pagesizes import A4
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, ListFlowable, ListItem
-from reportlab.lib import colors
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.enums import TA_CENTER
-from reportlab.lib.units import cm
 from pathlib import Path
-import html
+import zipfile, shutil
 
-out = Path("/mnt/data")
-pdf_path = out / "comparativa_plataformas_plantillas_web.pdf"
-html_path = out / "comparativa_plataformas_plantillas_web.html"
+base = Path("/mnt/data/plantillas_web_vscode")
+base.mkdir(exist_ok=True)
 
-title = "Dónde vender plantillas web HTML y CSS"
-intro = ("Comparativa práctica para alguien de 16 años que está aprendiendo desarrollo web. "
-         "Las reglas de edad, pagos y admisión pueden cambiar; comprueba siempre las condiciones oficiales antes de abrir una cuenta.")
+index_html = """<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Comparativa de plataformas para vender plantillas web HTML y CSS.">
+  <title>Vende tus plantillas web</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav">
+      <a class="brand" href="#">Web<span>Plantillas</span></a>
+      <a class="nav-link" href="#plataformas">Plataformas</a>
+    </nav>
+    <div class="hero-content">
+      <p class="eyebrow">GUÍA PARA CREADORES</p>
+      <h1>Convierte tu código en <span>plantillas web</span></h1>
+      <p class="hero-text">Crea diseños con HTML y CSS, prepara una demostración y descubre dónde puedes ofrecerlos a compradores.</p>
+      <a class="button" href="#plataformas">Comparar plataformas</a>
+    </div>
+  </header>
 
-rows = [
-    ["Plataforma", "Qué puedes vender", "Condiciones relevantes para menores"],
-    ["Gumroad", "Descargas digitales: ZIP con HTML, CSS, imágenes y documentación.", 
-     "Permite vender desde los 13 años, pero el proveedor de pagos no verifica por sí solo a menores de 18. Necesitarás que un padre, madre o tutor gestione legalmente la cuenta de cobro según las reglas aplicables."],
-    ["Framer Marketplace", "Plantillas creadas para Framer; no es un mercado genérico para vender cualquier carpeta HTML/CSS.", 
-     "El programa paga el 100% de las ventas de plantillas según su ayuda oficial. Antes de participar, un menor debe confirmar los requisitos contractuales, de cuenta y de cobro con Framer y su tutor."],
-    ["Webflow Marketplace", "Plantillas creadas para Webflow.", 
-     "Debes recibir aprobación como creador de plantillas. No es simplemente subir archivos HTML/CSS. Revisa los términos de edad y cobro con un adulto responsable."],
-    ["Creative Market", "Activos digitales y algunas plantillas/temas web.", 
-     "Sus términos exigen capacidad para aceptar un contrato vinculante; tener más de 13 años no significa automáticamente que puedas gestionar una tienda y los pagos sin un adulto. Confirma la elegibilidad directamente."],
-    ["ThemeForest / Envato", "Plantillas HTML y temas para CMS.", 
-     "Envato indica que los autores deben tener 18 años o más. Además, las nuevas altas de autores están pausadas y funcionan por invitación selectiva; no es una opción práctica para empezar ahora."]
-]
+  <main>
+    <section class="intro section">
+      <p class="eyebrow">EMPIEZA CON BUEN PIE</p>
+      <h2>¿Qué puedes vender?</h2>
+      <p>Puedes preparar plantillas para restaurantes, peluquerías, tiendas o portfolios. Entrega los archivos ordenados, una vista previa y unas instrucciones sencillas.</p>
+    </section>
 
-recommendation = ("Recomendación: empieza creando una plantilla original para un tipo de negocio concreto (por ejemplo, un restaurante), "
-                  "con versión móvil, instrucciones y una demo. A los 16 años, la vía más segura es trabajar con un padre, madre o tutor "
-                  "que acepte expresamente las condiciones y gestione la parte contractual y de cobro cuando la plataforma lo permita. "
-                  "No falsees tu edad ni uses la identidad o los datos de pago de otra persona sin su autorización.")
+    <section id="plataformas" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">COMPARATIVA</p>
+        <h2>Plataformas que puedes investigar</h2>
+        <p>Las condiciones pueden cambiar. Lee siempre las reglas oficiales antes de abrir una cuenta o publicar un producto.</p>
+      </div>
 
-checklist = [
-    "Entrega un archivo ZIP ordenado: index.html, style.css, carpeta images y README con instrucciones.",
-    "Incluye una demo visible y capturas reales de la plantilla.",
-    "Usa solo fotos, iconos y fuentes con licencia adecuada; no copies webs de otras empresas.",
-    "Aclara qué incluye la compra, qué no incluye y si ofreces soporte.",
-    "Comprueba comisiones, método de pago, requisitos fiscales y edad mínima antes de publicar."
-]
+      <div class="cards">
+        <article class="card">
+          <div class="card-number">01</div>
+          <h3>Gumroad</h3>
+          <p>Permite vender descargas digitales, como un ZIP con HTML, CSS, imágenes y documentación.</p>
+          <p class="note"><strong>Edad:</strong> si eres menor, revisa las condiciones de cuenta y cobro con tu padre, madre o tutor.</p>
+          <a href="https://gumroad.com/terms" target="_blank" rel="noopener">Consultar condiciones ↗</a>
+        </article>
 
-sources = [
-    ("Gumroad — Terms of Service", "https://gumroad.com/terms"),
-    ("Gumroad — Payout settings / sellers under 18", "https://gumroad.com/help/article/260-your-payout-settings-page"),
-    ("Framer — Creator Program", "https://www.framer.com/help/articles/how-the-creator-program-works/"),
-    ("Webflow — Contribute to the Marketplace", "https://help.webflow.com/hc/en-us/articles/33961403328403-Contribute-to-the-Webflow-Marketplace"),
-    ("Creative Market — Seller Terms", "https://creativemarket.com/terms/seller"),
-    ("Envato — Author applications are paused", "https://help.author.envato.com/hc/en-us/articles/53981083605913-Author-applications-are-paused"),
-    ("Envato — Author FAQs (age requirement)", "https://help.author.envato.com/hc/en-us/articles/360041052771-Becoming-an-Envato-Author-FAQs")
-]
+        <article class="card">
+          <div class="card-number">02</div>
+          <h3>Framer</h3>
+          <p>Su marketplace está orientado a plantillas creadas para Framer, no a cualquier carpeta HTML/CSS.</p>
+          <p class="note"><strong>Edad:</strong> confirma los requisitos de participación y cobro antes de solicitar acceso.</p>
+          <a href="https://www.framer.com/help/" target="_blank" rel="noopener">Centro de ayuda ↗</a>
+        </article>
 
-# PDF
-styles = getSampleStyleSheet()
-styles.add(ParagraphStyle(name="TitleCustom", parent=styles["Title"], fontName="Helvetica-Bold", fontSize=20, leading=24, alignment=TA_CENTER, textColor=colors.HexColor("#174734"), spaceAfter=12))
-styles.add(ParagraphStyle(name="Sub", parent=styles["BodyText"], fontSize=9, leading=12, textColor=colors.HexColor("#444444"), spaceAfter=10))
-styles.add(ParagraphStyle(name="Cell", parent=styles["BodyText"], fontSize=7.6, leading=9.5))
-styles.add(ParagraphStyle(name="CellHead", parent=styles["BodyText"], fontSize=8, leading=9.5, textColor=colors.white, fontName="Helvetica-Bold"))
-styles.add(ParagraphStyle(name="H2Custom", parent=styles["Heading2"], fontSize=12, leading=15, textColor=colors.HexColor("#174734"), spaceBefore=10, spaceAfter=5))
-styles.add(ParagraphStyle(name="Small", parent=styles["BodyText"], fontSize=7.5, leading=9, textColor=colors.HexColor("#444444")))
+        <article class="card">
+          <div class="card-number">03</div>
+          <h3>Webflow</h3>
+          <p>Permite ofrecer plantillas creadas para Webflow mediante su marketplace y proceso para creadores.</p>
+          <p class="note"><strong>Edad:</strong> comprueba las condiciones de aprobación, contrato y pagos.</p>
+          <a href="https://help.webflow.com/" target="_blank" rel="noopener">Centro de ayuda ↗</a>
+        </article>
 
-doc = SimpleDocTemplate(str(pdf_path), pagesize=A4, rightMargin=1.5*cm, leftMargin=1.5*cm, topMargin=1.4*cm, bottomMargin=1.4*cm)
-story = [Paragraph(title, styles["TitleCustom"]), Paragraph(intro, styles["Sub"]), Spacer(1, 4)]
-table_data = []
-for r_idx, row in enumerate(rows):
-    if r_idx == 0:
-        table_data.append([Paragraph(html.escape(cell), styles["CellHead"]) for cell in row])
-    else:
-        table_data.append([Paragraph(html.escape(cell), styles["Cell"]) for cell in row])
-tbl = Table(table_data, colWidths=[3.0*cm, 4.0*cm, 9.0*cm], repeatRows=1, hAlign="LEFT")
-tbl.setStyle(TableStyle([
-    ("BACKGROUND", (0,0), (-1,0), colors.HexColor("#174734")),
-    ("TEXTCOLOR", (0,0), (-1,0), colors.white),
-    ("GRID", (0,0), (-1,-1), 0.4, colors.HexColor("#D4DDD7")),
+        <article class="card">
+          <div class="card-number">04</div>
+          <h3>Creative Market</h3>
+          <p>Marketplace de recursos digitales; revisa si tu tipo de plantilla encaja en su catálogo.</p>
+          <p class="note"><strong>Edad:</strong> necesitarás cumplir los requisitos contractuales y de vendedor.</p>
+          <a href="https://creativemarket.com/terms/seller" target="_blank" rel="noopener">Condiciones de vendedor ↗</a>
+        </article>
+
+        <article class="card">
+          <div class="card-number">05</div>
+          <h3>Envato / ThemeForest</h3>
+          <p>Conocido por sus temas y plantillas web, incluidas plantillas HTML.</p>
+          <p class="note"><strong>Edad:</strong> revisa la edad mínima y si acepta nuevas solicitudes de autores.</p>
+          <a href="https://help.author.envato.com/" target="_blank" rel="noopener">Ayuda para autores ↗</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="steps section">
+      <p class="eyebrow">TU PRIMER PRODUCTO</p>
+      <h2>Antes de publicar</h2>
+      <ol>
+        <li><strong>Crea algo original.</strong> Por ejemplo, una web de restaurante con carta, ubicación y contacto.</li>
+        <li><strong>Adáptala a móviles.</strong> Comprueba que se vea bien en pantallas pequeñas.</li>
+        <li><strong>Ordena los archivos.</strong> Incluye <code>index.html</code>, <code>style.css</code>, imágenes con licencia y un README.</li>
+        <li><strong>Prepara una demo.</strong> Muestra capturas y explica qué incluye la compra.</li>
+        <li><strong>Comprueba las reglas.</strong> Como menor de edad, pide a un adulto responsable que te ayude a verificar las condiciones legales y de cobro. No falsees tu edad.</li>
+      </ol>
+    </section>
+
+    <section class="callout">
+      <h2>Consejo para empezar</h2>
+      <p>Haz una plantilla excelente para un tipo de negocio antes de crear muchas. Una web clara, rápida y adaptable es mejor que varias plantillas incompletas.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>WebPlantillas · Proyecto de práctica en HTML y CSS</p>
+    <p class="footer-small">Esta página es informativa. Verifica las condiciones actuales de cada plataforma antes de vender.</p>
+  </footer>
+</body>
+</html>
+"""
+
+style_css = """/* Estilos principales */
+:root {
+  --green: #164734;
+  --green-light: #dce9df;
+  --cream: #f7f4eb;
+  --ink: #1e2b24;
+  --muted: #647168;
+  --white: #ffffff;
+  --line: #dce3dc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+}
+
+.hero {
+  background:
+    radial-gradient(circle at 85% 20%, #527c61 0, transparent 30%),
+    var(--green);
+  color: var(--white);
+  min-height: 440px;
+  padding: 22px max(6vw, 20px) 72px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.brand {
+  color: var(--white);
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-decoration: none;
+  letter-spacing: -0.04em;
+}
+
+.brand span {
+  color: #c9e2cd;
+}
+
+.nav-link {
+  color: var(--white);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.hero-content {
+  max-width: 1120px;
+  margin: 78px auto 0;
+}
+
+.eyebrow {
+  color: #60856c;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.hero .eyebrow {
+  color: #c9e2cd;
+}
+
+h1, h2, h3, p {
+  margin-top: 0;
+}
+
+h
